@@ -1,0 +1,198 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body{
+    font-family: "Cal Sans", sans-serif;
+    background-color: #fff5f1;
+    overflow-x: hidden;
+}
+  
+.nav_bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #eb5a3c;
+}
+  
+.logo{
+    color: #fff;
+    font-size: 28px;
+}
+  
+.nav_links a{
+    margin-left: 20px;
+    text-decoration: none;
+    background-color: #d94e33;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+  
+.nav_links a:hover{
+    background-color: #c93010;
+}
+  
+.hero{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 40px;
+    background-color: #fff5f1;
+}
+  
+.landing_text{
+    flex: 1;
+    min-width: 300px;
+    max-width: 50%;
+    padding: 20px;
+}
+  
+.more{
+    font-size: 48px;
+    color: #eb5a3c;
+    margin-bottom: 20px;
+}
+  
+.text{
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+  
+.img_container{
+    flex: 1;
+    min-width: 300px;
+    max-width: 50%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+  
+.image{
+    height: 300px;
+    width: 100%;
+    max-width: 500px;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
+.section_title {
+    text-align: center;
+    font-size: 32px;
+    color: #222;
+    margin: 60px 0 20px;
+    font-weight: 600;
+    position: relative;
+}
+  
+.section_title::after {
+    content: "";
+    display: block;
+    height: 3px;
+    width: 60px;
+    margin: 10px auto 0;
+    background-color: #eb5a3c;
+    border-radius: 2px;
+}
+
+#mc{
+    background-image: url('../images/mc.png');
+}
+
+#kfc{
+    background-image: url('../images/kfc.png');
+}
+
+#bk{
+    background-image: url('../images/burgerking.png');
+}
+
+#pizza{
+    background-image: url('../images/pizzahut.png');
+}
+
+#subway{
+    background-image: url('../images/subway.png');
+}
+
+#starbucks{
+    background-image: url('../images/starbucks.png');
+}
+
+#dominos{
+    background-image: url('../images/dominos.png');
+}
+
+#popeyes{
+    background-image: url('../images/popeyes.png');
+}
+
+#marjane{
+    background-image: url('../images/marjane.png');
+}
+
+#carrefour{
+    background-image: url('../images/carrefour.png');
+}
+
+#ikea{
+    background-image: url('../images/ikea.png');
+}
+
+#atacadao{
+    background-image: url('../images/atacadao.png');
+}
+  
+.brands{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding: 60px 40px;
+    background-color: #fff5f1;
+}
+  
+.brand_item {
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+  
+.brand_item:hover .brand {
+    transform: scale(1.06);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+  
+.brand {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+  
+.brand::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+    border-radius: 12px;
+    z-index: 1;
+}
+  
+.brand_name {
+    margin-top: 12px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
