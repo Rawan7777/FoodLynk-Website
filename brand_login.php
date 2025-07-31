@@ -8,17 +8,17 @@ $password_error = false;
 
 if (isset($_POST['submit'])) {
 
-    $conn = mysqli_connect("localhost", "root", "", "FoodLynk");
+    $connection = mysqli_connect("localhost", "root", "", "FoodLynk");
 
-    if (!$conn) {
+    if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $email = mysqli_real_escape_string($connection, $_POST['email']);
     $password = $_POST['password'];
 
     $query = "SELECT * FROM brands WHERE email = '$email'";
-    $result = mysqli_query($conn, $query);
+    $result = mysqli_query($connection, $query);
 
     if (mysqli_num_rows($result) === 1) {
 
@@ -26,8 +26,12 @@ if (isset($_POST['submit'])) {
 
         if (password_verify($password, $user['password'])) {
 
-            // header("Location: admin_waiting.php");
-            // exit();
+            session_start();
+            
+            $_SESSION['brand_email'] = $email;
+            
+            header("Location: brand_waiting.php");
+            exit();
 
         } else {
 
@@ -41,7 +45,7 @@ if (isset($_POST['submit'])) {
         $email_placeholder = "Email not found";
     }
 
-    mysqli_close($conn);
+    mysqli_close($connection);
 }
 
 ?>
@@ -80,7 +84,7 @@ if (isset($_POST['submit'])) {
 
 		</form>
 
-		<a href="create_brand.php" class="signup-link">Don't have a brand? Create one</a>
+		<a href="brand_creation.php" class="signup-link">Don't have a brand? Create one</a>
 	
     </div>
 

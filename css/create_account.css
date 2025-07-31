@@ -110,6 +110,58 @@ body {
 }
   
 .home-arrow:hover {
-    background-color: #c46553;
+    background-color: #d94e33;
     color: #fff;
+}
+
+.confirmation-box {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    text-align: center;
+}
+  
+.confirmation-box h2 {
+    color: #eb5a3c;
+    margin-bottom: 15px;
+}
+  
+.confirmation-box p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+  
+.info-box {
+    text-align: left;
+    background-color: #fff7f5;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ffe0d8;
+}
+  
+.info-box p {
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #444;
+}
+  
+.button {
+    font-family: 'Cal Sans', sans-serif;
+    width: 100%;
+    padding: 14px;
+    background-color: #eb5a3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #d94e33;
 }

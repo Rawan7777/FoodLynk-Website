@@ -27,8 +27,12 @@ if(isset($_POST['submit'])){
 
 		if(password_verify($password, $client['password'])){
 			
-			// header("Location: user_account.php");
-            // exit();
+			session_start();
+            
+            $_SESSION['brand_email'] = $email;
+            
+            header("Location: client_account.php");
+            exit();
 			
 		} else {
 
@@ -81,7 +85,7 @@ if(isset($_POST['submit'])){
 		
 		</form>
 
-		<a href="client_sign_in.php" class="signup-link">Don't have an account? Sign up</a>
+		<a href="client_signing.php" class="signup-link">Don't have an account? Sign up</a>
 		
   </div>
 

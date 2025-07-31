@@ -1,0 +1,84 @@
+body {
+  font-family: 'Cal Sans', sans-serif;
+  background-color: #f7f7f7;
+  padding: 40px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #eb5a3c;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 16px;
+  text-align: left;
+}
+
+th {
+  background-color: #eb5a3c;
+  color: white;
+}
+
+tr:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.approved {
+  color: green;
+}
+
+.rejected, .suspended {
+  color: red;
+}
+
+button {
+  margin-right: 8px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.approve {
+  background-color: #4caf50;
+  color: white;
+}
+
+.approve:hover {
+  background-color: #43a047;
+}
+
+.reject {
+  background-color: #f44336;
+  color: white;
+}
+
+.reject:hover {
+  background-color: #e53935;
+}
+
+.suspend {
+  background-color: #ff9800;
+  color: white;
+}
+
+.suspend:hover {
+  background-color: #fb8c00;
+}

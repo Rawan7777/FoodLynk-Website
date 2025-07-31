@@ -21,7 +21,7 @@
 		
 		<nav class="nav_links">
 			<a href="client_login.php">Login</a>
-			<a href="create_brand.php">Make Your Brand</a>
+			<a href="brand_creation.php">Make Your Brand</a>
 		</nav>
 
 	</div>
