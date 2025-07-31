@@ -18,12 +18,14 @@
 	<div class="nav_bar">
 
 		<h1 class="logo">FoodLynk</h1>
+		
 		<nav class="nav_links">
-			<a href="login.html">Login</a>
-			<a href="create-brand.html">Make Your Brand</a>
+			<a href="client_login.php">Login</a>
+			<a href="create_brand.php">Make Your Brand</a>
 		</nav>
 
 	</div>
+	
 
 	<section class="hero">
 
