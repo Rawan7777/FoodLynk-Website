@@ -12,6 +12,7 @@ $confirm_password_placeholder 	= "Confirm Password";
 $category_placeholder 			= "Category";
 
 $email_error = 0;
+$brand_name_error = 0;
 $confirm_password_error = 0;
 
 
@@ -23,7 +24,7 @@ if (isset($_POST["submit"])) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $username   	= mysqli_real_escape_string($connection, $_POST['username']);
+    $username   		= mysqli_real_escape_string($connection, $_POST['username']);
     $first_name   		= mysqli_real_escape_string($connection, $_POST['first_name']);
     $last_name    		= mysqli_real_escape_string($connection, $_POST['last_name']);
     $brand_name   		= mysqli_real_escape_string($connection, $_POST['brand_name']);
@@ -36,14 +37,15 @@ if (isset($_POST["submit"])) {
     // Handle image upload
     $image_name = $_FILES['brand_image']['name'];
     $image_tmp  = $_FILES['brand_image']['tmp_name'];
-    $image_path = "uploads/" . basename($image_name);
+    $image_path = "cover_images/" . basename($image_name);
     move_uploaded_file($image_tmp, $image_path);
 
 	$email_placeholder = $email;
+	$brand_name_placeholder = $brand_name;
 
 	if($_POST['password'] == $_POST['confirm_password']){
 
-		$check_query = "SELECT email FROM brands WHERE email = '$email'";
+		$check_query = "SELECT email, brand_name FROM brands WHERE email = '$email'";
 		$check_query_result = mysqli_query($connection, $check_query);
 
 		if(mysqli_num_rows($check_query_result) > 0){
@@ -53,21 +55,33 @@ if (isset($_POST["submit"])) {
 
 		}else{
 
-			$query = "INSERT INTO brands 
-            (username, first_name, last_name, phone_number, email, address, brand_name, brand_image, password, category, status) VALUES 
-            ('$username', '$first_name', '$last_name', '$phone_number', '$email', '$address', '$brand_name', '$image_path', '$password', '$category', 'pending')";
+			$brand_name_check_query = "SELECT brand_name FROM brands WHERE brand_name = '$brand_name'";
+			$brand_name_check_query_result = mysqli_query($connection, $brand_name_check_query);
 
-			if (!mysqli_query($connection, $query)) {
-				die("Error inserting into database: " . mysqli_error($connection));
+			if(mysqli_num_rows($brand_name_check_query_result) > 0){
+			
+				$brand_name_error = 1;
+				$brand_name_placeholder = "Brand Name already taken";
+	
+			}else{
+
+				$query = "INSERT INTO brands 
+				(username, first_name, last_name, phone_number, email, address, brand_name, brand_image, password, category, status) VALUES 
+				('$username', '$first_name', '$last_name', '$phone_number', '$email', '$address', '$brand_name', '$image_path', '$password', '$category', 'pending')";
+
+				if (!mysqli_query($connection, $query)) {
+					die("Error inserting into database: " . mysqli_error($connection));
+				}
+
+				session_start();
+				
+				$_SESSION['brand_email'] = $email;
+				
+				header("Location: brand_waiting.php");
+				exit();
 			}
-
-			session_start();
-            
-            $_SESSION['brand_email'] = $email;
-            
-            header("Location: brand_waiting.php");
-            exit();
 		}
+		
 	}else{
 
 		$confirm_password_error = 1;
@@ -105,8 +119,10 @@ if (isset($_POST["submit"])) {
 				<input type="text" name="first_name" placeholder="<?php echo $first_name_placeholder; ?>"
 				value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>" required />
 
-				<input type="text" name="brand_name" placeholder="<?php echo $brand_name_placeholder; ?>"
-				value="<?php echo isset($_POST['brand_name']) ? htmlspecialchars($_POST['brand_name']) : ''; ?>" required />
+				<input type="text" name="brand_name" placeholder="<?php echo $brand_name_placeholder; ?>" 
+				value="<?php echo isset($_POST['brand_name']) && !$brand_name_error ? htmlspecialchars($_POST['brand_name']) : ''; ?>" 
+				style="<?php echo !empty($brand_name_error) ? 'border: 2px solid red; color: red;' : ''; ?>" 
+				required/>
 
 				<input type="tel" name="phone_number" placeholder="<?php echo $phone_number_placeholder; ?>" 
 				value="<?php echo isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : ''; ?>"required />

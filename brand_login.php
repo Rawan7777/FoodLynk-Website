@@ -22,16 +22,30 @@ if (isset($_POST['submit'])) {
 
     if (mysqli_num_rows($result) === 1) {
 
-        $user = mysqli_fetch_assoc($result);
+        $brand = mysqli_fetch_assoc($result);
 
-        if (password_verify($password, $user['password'])) {
+        if (password_verify($password, $brand['password'])) {
 
             session_start();
             
             $_SESSION['brand_email'] = $email;
+
+            if($brand['status'] == "pending"){
+
+                header("Location: brand_waiting.php");
+                exit();
+
+            }else if($brand['status'] == "approve"){
+
+                header("Location: brand_dashboard.php");
+                exit();
+
+            }else if($brand['status'] == "reject" || $brand['status'] == "suspend"){
+
+                header("Location: brand_waiting.php");
+                exit();
+            }
             
-            header("Location: brand_waiting.php");
-            exit();
 
         } else {
 

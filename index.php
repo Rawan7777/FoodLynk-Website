@@ -21,7 +21,16 @@
 		
 		<nav class="nav_links">
 			<a href="client_login.php">Login</a>
-			<a href="brand_creation.php">Make Your Brand</a>
+			
+			<?php session_start(); ?>
+
+			<?php if (isset($_SESSION['brand_email'])): ?>
+				<a href="brand_dashboard.php">Your Brand</a>
+
+			<?php else: ?>
+				<a href="brand_creation.php">Make Your Brand</a>
+
+			<?php endif; ?>
 		</nav>
 
 	</div>
