@@ -36,7 +36,7 @@ h1 {
     color: #eb5a3c;
 }
 
-.add-btn {
+.btn {
     background-color: #eb5a3c;
     color: white;
     padding: 10px 20px;
@@ -48,7 +48,7 @@ h1 {
     transition: background 0.3s;
 }
 
-.add-btn:hover {
+.btn:hover {
     background-color: #d94e33;
 }
 
@@ -168,4 +168,15 @@ h1 {
     margin: 10px 0 6px;
     font-weight: bold;
     color: #444;
+}
+
+.quantity-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 15px;
+  }
+  
+.quantity-wrapper input[type="number"] {
+	width: 120px;
 }
