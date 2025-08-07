@@ -52,7 +52,7 @@ if(isset($_POST['logout'])){
 
 <body>
 
-	<a href="index.html" class="home-arrow">&#8592; Home</a>
+	<a href="index.php" class="home-arrow">&#8592; Home</a>
 
 	<form method="post" class="confirmation-box">
 

@@ -6,7 +6,7 @@ $password_placeholder = "Password";
 $email_error = false;
 $password_error = false;
 
-if(isset($_POST['submit'])){
+if(isset($_POST['login'])){
 
 	$connection = mysqli_connect("localhost", "root", "", "FoodLynk");
 
@@ -29,7 +29,7 @@ if(isset($_POST['submit'])){
 			
 			session_start();
             
-            $_SESSION['brand_email'] = $email;
+            $_SESSION['client_email'] = $email;
             
             header("Location: client_account.php");
             exit();
@@ -69,7 +69,7 @@ if(isset($_POST['submit'])){
 
 		<h2 class="login-title">Welcome Back to <span>FoodLynk</span></h2>
 		
-		<form class="login-form" action="#" method="POST">
+		<form class="login-form" method="POST">
 			
 			
 			<input type="email" name="email" placeholder="<?php echo $email_placeholder; ?>"
@@ -81,7 +81,7 @@ if(isset($_POST['submit'])){
 			style="<?php echo $password_error ? 'border: 2px solid red; color: red;' : ''; ?>"
 			value="<?php echo !$password_error && isset($_POST['password']) ? htmlspecialchars($_POST['password']) : ''; ?>" required />
 			
-			<button type="submit">Login</button>
+			<button type="submit" name="login">Login</button>
 		
 		</form>
 

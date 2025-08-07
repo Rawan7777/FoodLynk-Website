@@ -33,10 +33,17 @@ $result = mysqli_query($connection, $query);
 		
 		<nav class="nav_links">
 
-			<a href="client_login.php">Login</a>
 			
+			<?php if (isset($_SESSION['client_email'])): ?>
+				<a href="client_account.php">My account</a>
+
+			<?php else: ?>
+				<a href="client_login.php">Login</a>
+
+			<?php endif; ?>
+
 			<?php if (isset($_SESSION['brand_email'])): ?>
-				<a href="brand_dashboard.php">Your Brand</a>
+				<a href="brand_dashboard.php">My Brand</a>
 
 			<?php else: ?>
 				<a href="brand_creation.php">Make Your Brand</a>
@@ -106,7 +113,7 @@ $result = mysqli_query($connection, $query);
 			while($row = mysqli_fetch_assoc($result)){
 
 			echo '	<div class="brand_item">
-						<a href="" class="brand_anchor" title="Visit ' . $row['brand_name'] . '">
+						<a href="menu.php?brand_name=' . $row['brand_name'] . '&client_email=' . $_SESSION['client_email'] . '" class="brand_anchor" title="Visit ' . $row['brand_name'] . '">
 							<img src="' . $row['brand_image'] . '" alt="' . $row['brand_name'] . ' logo" />
 						</a>
 						<p class="brand_name">' . $row['brand_name'] . '</p>

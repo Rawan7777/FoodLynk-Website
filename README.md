@@ -7,3 +7,5 @@ v1.2:   update the php and the naming of the files, and add new pages (master_ad
 v1.3:   Add brand_dasboard.php and its css to fetch and insert meals, also make the brand_name unique in brand_creation.php, and redirect the user to the right page in brand_login.php and index.php, and add DTABASE.md for phpmyadmin tables queries.
 
 v1.4:   Add logout button and the quantity unlimited option in brand_dasboard.php, also fetch the approved brand and show them in index.php, while changing the brand cards html&css.
+
+v1.5:   Add menu.php and menu.css to show the menu of the chosen brand, fetch ad show the menu, also alow the client to buy and send the informations to the database.
