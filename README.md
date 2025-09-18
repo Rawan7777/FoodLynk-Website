@@ -9,3 +9,7 @@ v1.3:   Add brand_dasboard.php and its css to fetch and insert meals, also make 
 v1.4:   Add logout button and the quantity unlimited option in brand_dasboard.php, also fetch the approved brand and show them in index.php, while changing the brand cards html&css.
 
 v1.5:   Add menu.php and menu.css to show the menu of the chosen brand, fetch ad show the menu, also alow the client to buy and send the informations to the database.
+
+v1.6:   Not much changed, i was busy, and now i came back to continue this website.
+
+v1.7:   This was a massive design and theme update, using new colors, animations and html elements renaming, lot of files deleted, and others got merged, all to improve the website aesthetics.

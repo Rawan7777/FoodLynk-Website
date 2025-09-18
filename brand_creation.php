@@ -100,74 +100,147 @@ if (isset($_POST["submit"])) {
 	<title>Create Brand - FoodLynk</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet" />
-	<link rel="stylesheet" href="css/create_account.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/login&signin.css" />
 
 </head>
 <body>
 
-	<a href="index.php" class="home-arrow">&#8592; Home</a>
-
-	<div class="brand-container">
-
-		<h2 class="brand-title">Create Your <span>Brand</span></h2>
+	<a href="index.php" class="home-link">
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+			<path d="M19 12H5M12 19l-7-7 7-7"/>
+		</svg>
+		Back to Home
+	</a>
 		
-		<form class="brand-form" method="POST" enctype="multipart/form-data">
+	<div class="main-container">
 
-			<div class="form-column">
+		<div class="brand-container">
 
-				<input type="text" name="first_name" placeholder="<?php echo $first_name_placeholder; ?>"
-				value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>" required />
+			<div class="header-section">
 
-				<input type="text" name="brand_name" placeholder="<?php echo $brand_name_placeholder; ?>" 
-				value="<?php echo isset($_POST['brand_name']) && !$brand_name_error ? htmlspecialchars($_POST['brand_name']) : ''; ?>" 
-				style="<?php echo !empty($brand_name_error) ? 'border: 2px solid red; color: red;' : ''; ?>" 
-				required/>
+				<div class="header-top">
+					<div class="brand-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+					</div>
+					<h1 class="brand-title">Create Your <span>Brand</span></h1>
+				</div>
 
-				<input type="tel" name="phone_number" placeholder="<?php echo $phone_number_placeholder; ?>" 
-				value="<?php echo isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : ''; ?>"required />
-
-				<input type="password" name="password" placeholder="<?php echo $password_placeholder; ?>" 
-				value="<?php echo isset($_POST['password']) ? htmlspecialchars($_POST['password']) : ''; ?>"required />
-
-				<input type="text" name="username" placeholder="<?php echo $username_placeholder; ?>"
-				value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required />
+				<p class="brand-subtitle">Join FoodLynk and start reaching customers today</p>
 
 			</div>
 			
-			<div class="form-column">
-				<input type="text" name="last_name" placeholder="<?php echo $last_name_placeholder; ?>" 
-				value="<?php echo isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : ''; ?>" required />
+			<form class="brand-form" method="POST" enctype="multipart/form-data">
 
-				<input type="email" name="email" placeholder="<?php echo $email_placeholder; ?>" 
-				value="<?php echo isset($_POST['email']) && !$email_error ? htmlspecialchars($_POST['email']) : ''; ?>" 
-				style="<?php echo !empty($email_error) ? 'border: 2px solid red; color: red;' : ''; ?>" 
-				required/>
+				<div class="form-grid">
 
-				<input type="text" name="address" placeholder="<?php echo $address_placeholder; ?>" 
-				value="<?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address']) : ''; ?>" required />
+					<div class="form-group">
+						<input type="text" id="first_name" name="first_name" placeholder="<?php echo htmlspecialchars($first_name_placeholder); ?>"
+						value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>" required />
+					</div>
 
-				<input type="password" name="confirm_password" placeholder="<?php echo $confirm_password_placeholder; ?>" 
-				value="<?php echo isset($_POST['confirm_password']) && !$confirm_password_error ? htmlspecialchars($_POST['confirm_password']) : ''; ?>" 
-				style="<?php echo !empty($confirm_password_error) ? 'border: 2px solid red; color: red;' : ''; ?>" 
-				required />
+					<div class="form-group">
+						<input type="text" id="last_name" name="last_name" placeholder="<?php echo htmlspecialchars($last_name_placeholder); ?>" 
+						value="<?php echo isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : ''; ?>" required />
+					</div>
 
-				<input type="category" name="category" placeholder="<?php echo $category_placeholder; ?>" 
-				value="<?php echo isset($_POST['category']) ? htmlspecialchars($_POST['category']) : ''; ?>" required />
+					<div class="form-group">
+						<input type="text" id="username" name="username" placeholder="<?php echo htmlspecialchars($username_placeholder); ?>"
+						value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required />
+					</div>
+
+					<div class="form-group">
+						<input type="text" id="brand_name" name="brand_name" placeholder="<?php echo htmlspecialchars($brand_name_placeholder); ?>" 
+						value="<?php echo isset($_POST['brand_name']) && !$brand_name_error ? htmlspecialchars($_POST['brand_name']) : ''; ?>" 
+						class="<?php echo !empty($brand_name_error) ? 'error' : ''; ?>" 
+						required/>
+						<?php if($brand_name_error): ?>
+							<span class="error-message">Brand name already taken</span>
+						<?php endif; ?>
+					</div>
+
+					<div class="form-group">
+						<input type="email" id="email" name="email" placeholder="<?php echo htmlspecialchars($email_placeholder); ?>" 
+						value="<?php echo isset($_POST['email']) && !$email_error ? htmlspecialchars($_POST['email']) : ''; ?>" 
+						class="<?php echo !empty($email_error) ? 'error' : ''; ?>" 
+						required/>
+						<?php if($email_error): ?>
+							<span class="error-message">Email already taken</span>
+						<?php endif; ?>
+					</div>
+
+					<div class="form-group">
+						<input type="tel" id="phone_number" name="phone_number" placeholder="<?php echo htmlspecialchars($phone_number_placeholder); ?>" 
+						value="<?php echo isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : ''; ?>" required />
+					</div>
+
+					<div class="form-group">
+						<input type="text" id="address" name="address" placeholder="<?php echo htmlspecialchars($address_placeholder); ?>" 
+						value="<?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address']) : ''; ?>" required />
+					</div>
+
+					<div class="form-group">
+						<select id="category" name="category" required>
+							<option value="">Select Category</option>
+							<option value="restaurant" <?php echo (isset($_POST['category']) && $_POST['category'] == 'restaurant') ? 'selected' : ''; ?>>Restaurant</option>
+							<option value="supermarket" <?php echo (isset($_POST['category']) && $_POST['category'] == 'supermarket') ? 'selected' : ''; ?>>Supermarket</option>
+							<option value="cafe" <?php echo (isset($_POST['category']) && $_POST['category'] == 'cafe') ? 'selected' : ''; ?>>Cafe</option>
+							<option value="bakery" <?php echo (isset($_POST['category']) && $_POST['category'] == 'bakery') ? 'selected' : ''; ?>>Bakery</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<input type="password" id="password" name="password" placeholder="<?php echo htmlspecialchars($password_placeholder); ?>" required />
+					</div>
+
+					<div class="form-group">
+						<input type="password" id="confirm_password" name="confirm_password" placeholder="<?php echo htmlspecialchars($confirm_password_placeholder); ?>" 
+						class="<?php echo !empty($confirm_password_error) ? 'error' : ''; ?>" 
+						required />
+						<?php if($confirm_password_error): ?>
+							<span class="error-message">Passwords don't match</span>
+						<?php endif; ?>
+					</div>
+
+					<div class="form-group full-width">
+						<div class="file-input-wrapper">
+							<input type="file" id="brand_image" name="brand_image" accept="image/*" />
+							<div class="file-input-placeholder">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+									<circle cx="8.5" cy="8.5" r="1.5"/>
+									<polyline points="21,15 16,10 5,21"/>
+								</svg>
+								<span>Choose image file</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<button type="submit" name="submit" class="submit-btn">
+
+					<span>Create Your Brand</span>
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M5 12h14M12 5l7 7-7 7"/>
+					</svg>
+
+				</button>
+
+			</form>
+
+			<div class="footer-links">
+				<p>Already have a brand? <a href="brand_login.php">Sign in here</a></p>
 			</div>
 
-			<div style="width: 100%;">
-				<label for="brand_image" class="file-label">Upload Brand Image (1000×600)</label>
-				<input type="file" id="brand_image" name="brand_image" accept="image/*" />
-			</div>
-
-			<button type="submit" name="submit">Create Your Brand</button>
-
-		</form>
-
-		<a href="brand_login.php" class="already-link">Already have a brand?</a>
-
+		</div>
+		
 	</div>
-
 </body>
 </html>

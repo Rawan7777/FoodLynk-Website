@@ -37,6 +37,7 @@ if(isset($_POST['logout'])){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <title>Menu</title>
@@ -46,77 +47,95 @@ if(isset($_POST['logout'])){
     <link rel="stylesheet" href="css/menu.css" />
 
 </head>
+
 <body>
 
-    <div class="nav_bar">
+    <header class="navbar">
 
-        <h1 class="logo">FoodLynk</h1>
+        <div class="nav-container">
 
-        <nav class="nav_links">
+            <h1 class="logo" style="cursor:pointer;" onclick="window.location.href='index.php';">FoodLynk</h1>
+            
+            <!-- <nav class="nav_links">
 
-			<?php if (isset($_SESSION['client_email'])): ?>
-				<a href="client_account.php">My account</a>
+                <?php if (isset($_SESSION['client_email'])): ?>
+                    <a href="client_account.php">My account</a>
 
-			<?php else: ?>
-				<a href="client_login.php">Login</a>
+                <?php else: ?>
+                    <a href="client_login.php">Login</a>
 
-			<?php endif; ?>
+                <?php endif; ?>
 
-			<?php if (isset($_SESSION['brand_email'])): ?>
-				<a href="brand_dashboard.php">My Brand</a>
+                <?php if (isset($_SESSION['brand_email'])): ?>
+                    <a href="brand_dashboard.php">My Brand</a>
 
-			<?php else: ?>
-				<a href="brand_creation.php">Make Your Brand</a>
+                <?php else: ?>
+                    <a href="brand_creation.php">Make Your Brand</a>
 
-			<?php endif; ?>
+                <?php endif; ?> -->
+        </div>
 
-        </nav>
+    </header>
 
-    </div>
+    <h1 class="section-title">
+        <?php echo $brand_name ?> Menu
+        <span class="title-underline"></span>
+    </h1>
 
-    <h1 class="h1"><?php echo $brand_name?> Menu</h1>
+    <div class="container">
 
-    <div class="dashboard-container">
-
-        <div class="card-container">
+        <div class="menu-grid">
 
             <?php 
-        
+
             if(mysqli_num_rows($result_meals) > 0){
 
                 $meal_counter = 1;
 
                 while($meal = mysqli_fetch_assoc($result_meals)){
-
-                    echo '  <div class="meal-card">
-                                <img src="' . $meal['meal_image'] . ' " alt="Meal ' . $meal_counter++ . ' image" />
-                                <h4>' . $meal['meal_name'] . '</h4>
-                                <p>' . $meal['meal_description'] . '.</p>
-                                <div class="info">
-                                    <span>Qty: ' . ($meal['meal_quantity'] > 0 ? $meal['meal_quantity'] : 'Unlimited') . '</span>
-                                    <span>$' . $meal['meal_price'] . '</span>
-                                </div>
-                                <form method="post" action="menu.php?bougth_meal_name=' . $meal['meal_name'] .'&brand_name=' . $_GET['brand_name'] . '">
-                                    <button name="buy" class="btn buy-btn">Buy Now</button>
-                                </form>
-                            </div>';
+                    
+                    echo '
+                    <div class="meal-card">
+                        <div class="meal-image">
+                            <img src="' . $meal['meal_image'] . '" alt="Meal ' . $meal_counter++ . '">
+                        </div>
+                        <div class="meal-info">
+                            <h4 class="meal-name">' . $meal['meal_name'] . '</h4>
+                            <p class="meal-description">' . $meal['meal_description'] . '</p>
+                            <div class="meal-meta">
+                                <span>Qty: ' . ($meal['meal_quantity'] > 0 ? $meal['meal_quantity'] : 'Unlimited') . '</span>
+                                <span>$' . $meal['meal_price'] . '</span>
+                            </div>
+                            <form method="post" action="menu.php?bougth_meal_name=' . $meal['meal_name'] .'&brand_name=' . $_GET['brand_name'] . '">
+                                <button name="buy" class="btn">Buy Now</button>
+                            </form>
+                        </div>
+                    </div>';
                 }
             }
             ?>
 
+            <!-- Example Card -->
             <div class="meal-card">
-                <img src="meal_images/spaghetti-bolognese.jpg" alt="Meal 1" />
-                <h4>Spaghetti</h4>
-                <p>A classic Italian dish with tomato sauce and cheese.</p>
-                <div class="info">
-                    <span>Qty: 10</span>
-                    <span>$8.99</span>
+
+                <div class="meal-image">
+                    <img src="meal_images/spaghetti-bolognese.jpg" alt="Meal 1">
                 </div>
-				<form method="post">
-                    <button name="buy" class="btn buy-btn">Buy Now</button>
-                </form>
+                <div class="meal-info">
+                    <h4 class="meal-name">Spaghetti</h4>
+                    <p class="meal-description">A classic Italian dish with tomato sauce and cheese.</p>
+                    <div class="meal-meta">
+                        <span>Qty: 10</span>
+                        <span>$8.99</span>
+                    </div>
+                    <form method="post">
+                        <button name="buy" class="btn">Buy Now</button>
+                    </form>
+                </div>
+                
             </div>
 
+        </div>
     </div>
 
 </body>

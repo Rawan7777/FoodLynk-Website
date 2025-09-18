@@ -1,84 +1,148 @@
+* {
+    font-family: "Cal Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-orange: #ff6b35;
+    --secondary-orange: #f7931e;
+    --orange-light: #fff7f5;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #eab308;
+    --white: #ffffff;
+    --gray-50: #f8fafc;
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}
+
 body {
-  font-family: 'Cal Sans', sans-serif;
-  background-color: #f7f7f7;
-  padding: 40px;
+    background: linear-gradient(135deg, var(--gray-50), var(--orange-light), var(--gray-50));
+    min-height: 100vh;
+    color: var(--text-primary);
+    line-height: 1.6;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #eb5a3c;
+.background-gradient {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(255,107,53,0.08), transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(247,147,30,0.08), transparent 50%);
+    z-index: -1;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  border-radius: 10px;
-  overflow: hidden;
+.main-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 1rem;
 }
 
-th, td {
-  padding: 16px;
-  text-align: left;
+.brand-container {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 1rem 2.5rem;
+    width: 100%;
+    box-shadow: var(--shadow-md);
 }
 
-th {
-  background-color: #eb5a3c;
-  color: white;
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }
 
-tr:not(:last-child) {
-  border-bottom: 1px solid #eee;
+.brand-title {
+    color: #eb5a3c;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
-.pending {
-  color: orange;
-  font-weight: bold;
+.brand-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
 }
 
-.approved {
-  color: green;
+.table-wrapper {
+    overflow-x: auto;
 }
 
-.rejected, .suspended {
-  color: red;
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-button {
-  margin-right: 8px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.2s;
+.styled-table th, .styled-table td {
+    padding: 1rem;
+    text-align: left;
 }
 
-.approve {
-  background-color: #4caf50;
-  color: white;
+.styled-table thead {
+    background: var(--orange-light);
 }
 
-.approve:hover {
-  background-color: #43a047;
+.styled-table tbody tr {
+    border-bottom: 1px solid #eee;
 }
 
-.reject {
-  background-color: #f44336;
-  color: white;
+.status {
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-transform: capitalize;
 }
 
-.reject:hover {
-  background-color: #e53935;
+.status.approve { background: #d1fae5; color: var(--success-color); }
+.status.reject { background: #fee2e2; color: var(--error-color); }
+.status.suspend { background: #fef3c7; color: var(--warning-color); }
+.status.pending { background: #e0e7ff; color: #4338ca; }
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    margin-right: 0.5rem;
 }
 
-.suspend {
-  background-color: #ff9800;
-  color: white;
+.btn.approve {
+    background: var(--success-color);
+    color: white;
+}
+.btn.reject {
+    background: var(--error-color);
+    color: white;
+}
+.btn.suspend {
+    background: var(--warning-color);
+    color: white;
 }
 
-.suspend:hover {
-  background-color: #fb8c00;
+.btn:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+}
+
+.popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-orange);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
