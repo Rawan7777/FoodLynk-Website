@@ -166,9 +166,13 @@ $result = mysqli_query($connection, $query);
                 <?php 
 
                 $counter = 1;
+
                 if(mysqli_num_rows($result) > 0 && $counter < 2){
+
                     while($row = mysqli_fetch_assoc($result)){
+
                         $client_email_param = '';
+                        
                         if (isset($_SESSION['client_email'])) {
                             $client_email_param = '&client_email=' . $_SESSION['client_email'];
                         }

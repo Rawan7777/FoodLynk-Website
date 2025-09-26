@@ -13,3 +13,5 @@ v1.5:   Add menu.php and menu.css to show the menu of the chosen brand, fetch ad
 v1.6:   Not much changed, i was busy, and now i came back to continue this website.
 
 v1.7:   This was a massive design and theme update, using new colors, animations and html elements renaming, lot of files deleted, and others got merged, all to improve the website aesthetics.
+
+1.8:    Enhance brand_dashboard.php cards design, also adding delete and disable options for meals, redesigning the pop-up form, and including new options. Massive upgrade in menu.php by redesinig and adding new options like sort and filter and search, also an enhancement in the cards design and options, also add a cart to collect the bought meals. Add a new page for client account (client_account.php), also other page for editing client infos (client_edit_profile.php), also their css as well (client_account.css & client_edit_profile.css). Also some tweaking in the database. 

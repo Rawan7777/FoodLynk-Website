@@ -9,6 +9,7 @@ $query = "SELECT id, brand_name, first_name, last_name, email, status FROM brand
 $result = mysqli_query($connection, $query);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
+    
     $id = $_POST['id'];
 
     if (isset($_POST['approve'])) {
