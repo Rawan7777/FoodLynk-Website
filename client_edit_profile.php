@@ -179,22 +179,28 @@ $profile_image = $client['profile_image'] ?: "images/default_avatar.jpg";
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile - FoodLynk</title>
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/client_edit_profile.css">
+
 </head>
+
 <body>
+
     <div class="background-gradient"></div>
 
     <div class="top-bar">
+        
         <a href="client_account.php" class="home-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
-            Back to Home
+            Back to Account
         </a>
         
         <div class="nav-right">
@@ -203,6 +209,7 @@ $profile_image = $client['profile_image'] ?: "images/default_avatar.jpg";
                 <img src="<?php echo htmlspecialchars($profile_image); ?>" alt="User Avatar" id="nav-avatar">
             </div>
         </div>
+
     </div>
 
     <div class="main-container">

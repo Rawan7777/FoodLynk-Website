@@ -53,12 +53,7 @@ if(isset($_POST['logout'])){
         .confirmation-box {
             max-width: 900px;
             margin: 1rem auto;
-            background: var(--white);
-            border-radius: var(--radius-2xl);
             padding: 3.5rem 3rem;
-            box-shadow: var(--shadow-xl);
-            text-align: center;
-            animation: fadeInUp 0.8s ease-in-out;
         }
 
         .info-box {

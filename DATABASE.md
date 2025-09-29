@@ -8,7 +8,7 @@ The DataBase Structure:
         |
         ------- mealsnew
         |
-        -------client_meals
+        ------- orders
 
 CREATE TABLE brands (
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -60,9 +60,21 @@ CREATE TABLE mealsnew (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE client_meals (
-    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    client_email VARCHAR(100) NOT NULL,
-    brand_name VARCHAR(100) NOT NULL,
-    meal_name VARCHAR(255) NOT NULL
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    card_id VARCHAR(50),
+    email VARCHAR(150),
+    phone_number VARCHAR(50),
+    address TEXT,
+    payment_method VARCHAR(50),
+    card_number VARCHAR(50),
+    expiry VARCHAR(10),
+    cvv VARCHAR(10),
+    brand_name VARCHAR(100),
+    meal_name VARCHAR(150),
+    price DECIMAL(10,2),
+    quantity INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

@@ -23,14 +23,6 @@ if(isset($_POST['logout'])){
 $query_meals = "SELECT * FROM mealsnew WHERE brand_name = '$brand_name'";
 $result_meals = mysqli_query($connection, $query_meals);
 
-$status_query = "SELECT * FROM mealsnew WHERE brand_name = '$brand_name'";
-$status_result = mysqli_query($connection, $status_query);
-$status_fetch = mysqli_fetch_assoc($status_result);
-
-if($status_fetch){
-  $statusButton = ($status_fetch['status'] === 'Deactivate') ? 'Activate' : 'Deactivate';
-}
-
 if(isset($_POST['submit'])){
 
     if(mysqli_num_rows($result) === 1){
@@ -71,7 +63,7 @@ if(isset($_POST['submit'])){
 
 }
 
-if(isset($_POST['delete'])){
+if(isset($_POST['delete']) && isset($_POST['confirm_delete'])){
 
     if(isset($_GET['managed_meal_name'])){
 
@@ -87,7 +79,7 @@ if(isset($_POST['delete'])){
     exit();
 }
 
-if(isset($_POST['disable'])){
+if(isset($_POST['disable']) && isset($_POST['confirm_disable'])){
 
     if(isset($_GET['managed_meal_name'])){
 
@@ -95,7 +87,13 @@ if(isset($_POST['disable'])){
 
         if(!empty($managed_meal_name)){
 
-			$updateQuery = "UPDATE mealsnew SET status = '$statusButton' WHERE meal_name = '$managed_meal_name' AND brand_name = '$brand_name'";
+            $current_status_query = "SELECT status FROM mealsnew WHERE meal_name = '$managed_meal_name' AND brand_name = '$brand_name'";
+            $current_status_result = mysqli_query($connection, $current_status_query);
+            $current_status = mysqli_fetch_assoc($current_status_result);
+            
+            $new_status = ($current_status['status'] === 'Deactivate') ? 'Activate' : 'Deactivate';
+
+			$updateQuery = "UPDATE mealsnew SET status = '$new_status' WHERE meal_name = '$managed_meal_name' AND brand_name = '$brand_name'";
 			mysqli_query($connection, $updateQuery);
         }
     }
@@ -155,14 +153,23 @@ if(isset($_POST['disable'])){
 
                 while($meal = mysqli_fetch_assoc($result_meals)){
 
+                    $mealStatusButton = ($meal['status'] === 'Deactivate') ? 'Activate' : 'Deactivate';
+
 					echo '
 					<div class="meal-card">
 
 						<div class="card-top-buttons">
-							<form method="post" action="brand_dashboard.php?managed_meal_name=' . urlencode($meal['meal_name']) . '">
-								<button class="btn-delete" name="delete">Delete</button>
-								<button class="btn-disable" name="disable">' . $statusButton . '</button>
+
+							<form method="post" action="brand_dashboard.php?managed_meal_name=' . urlencode($meal['meal_name']) . '" id="delete-form-' . $meal_counter . '">
+								<button type="button" class="btn-delete" onclick="showDeleteConfirm(\'' . htmlspecialchars($meal['meal_name'], ENT_QUOTES) . '\', ' . $meal_counter . ')">Delete</button>
+								<input type="hidden" name="confirm_delete" value="1">
 							</form>
+
+							<form method="post" action="brand_dashboard.php?managed_meal_name=' . urlencode($meal['meal_name']) . '" id="disable-form-' . $meal_counter . '">
+								<button type="button" class="btn-disable" onclick="showStatusConfirm(\'' . htmlspecialchars($meal['meal_name'], ENT_QUOTES) . '\', \'' . $mealStatusButton . '\', ' . $meal_counter . ')">' . $mealStatusButton . '</button>
+								<input type="hidden" name="confirm_disable" value="1">
+							</form>
+                            
 						</div>
 
 						<img src="' . $meal['meal_image'] . '" alt="Meal ' . $meal_counter++ . ' image" />
@@ -179,6 +186,50 @@ if(isset($_POST['disable'])){
             }
 
             ?>
+
+        </div>
+
+    </div>
+
+    <div class="popup-overlay" id="deleteConfirmPopup" style="display: none;">
+
+        <div class="popup-container confirm-popup">
+
+            <div class="popup-header">
+                <h2>Confirm Delete</h2>
+                <button type="button" class="close-icon" onclick="hideDeleteConfirm()">✕</button>
+            </div>
+
+            <div class="confirm-content">
+                <p>Are you sure you want to delete "<span id="deleteMealName"></span>"?</p>
+                <p><strong>This action cannot be undone.</strong></p>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="hideDeleteConfirm()">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="statusConfirmPopup" style="display: none;">
+
+        <div class="popup-container confirm-popup">
+
+            <div class="popup-header">
+                <h2>Confirm Status Change</h2>
+                <button type="button" class="close-icon" onclick="hideStatusConfirm()">✕</button>
+            </div>
+
+            <div class="confirm-content">
+                <p>Are you sure you want to <span id="statusAction"></span> "<span id="statusMealName"></span>"?</p>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="hideStatusConfirm()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="confirmStatusChange()">Confirm</button>
+            </div>
 
         </div>
 
@@ -272,8 +323,68 @@ if(isset($_POST['disable'])){
 	</div>
 
     <script>
+
         function showPopup(){ document.getElementById("popup").style.display="flex"; }
         function hidePopup(){ document.getElementById("popup").style.display="none"; }
+
+        let currentDeleteForm = null;
+        let currentStatusForm = null;
+
+        function showDeleteConfirm(mealName, formId) {
+
+            document.getElementById("deleteMealName").textContent = mealName;
+            document.getElementById("deleteConfirmPopup").style.display = "flex";
+            currentDeleteForm = formId;
+        }
+
+        function hideDeleteConfirm() {
+
+            document.getElementById("deleteConfirmPopup").style.display = "none";
+            currentDeleteForm = null;
+        }
+
+        function confirmDelete() {
+
+            if (currentDeleteForm) {
+
+                const form = document.getElementById("delete-form-" + currentDeleteForm);
+                const deleteButton = document.createElement('input');
+                deleteButton.type = 'hidden';
+                deleteButton.name = 'delete';
+                deleteButton.value = '1';
+                form.appendChild(deleteButton);
+                form.submit();
+            }
+        }
+
+        function showStatusConfirm(mealName, action, formId) {
+
+            document.getElementById("statusMealName").textContent = mealName;
+            document.getElementById("statusAction").textContent = action.toLowerCase();
+            document.getElementById("statusConfirmPopup").style.display = "flex";
+            currentStatusForm = formId;
+        }
+
+        function hideStatusConfirm() {
+
+            document.getElementById("statusConfirmPopup").style.display = "none";
+            currentStatusForm = null;
+        }
+
+        function confirmStatusChange() {
+
+            if (currentStatusForm) {
+
+                const form = document.getElementById("disable-form-" + currentStatusForm);
+                const disableButton = document.createElement('input');
+                disableButton.type = 'hidden';
+                disableButton.name = 'disable';
+                disableButton.value = '1';
+                form.appendChild(disableButton);
+                form.submit();
+            }
+        }
+		
     </script>
 
 </body>

@@ -7,8 +7,54 @@ $connection = mysqli_connect("localhost", "root", "", "foodlynk");
 if(isset($_GET['brand_name']) || isset($_GET['refresh'])){
 
     $brand_name = $_GET['brand_name'];
+    $_SESSION['brand_name'] = $brand_name;
     $query_meals = "SELECT * FROM mealsnew WHERE brand_name = '$brand_name'";
     $result_meals = mysqli_query($connection, $query_meals);
+}
+
+if(isset($_POST['ajax_add_to_cart'])){
+
+    $brand_name = $_POST['brand_name'];
+    $bougth_meal_name = $_POST['meal_name'];
+    $meal_price = $_POST['meal_price'];
+
+    if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+
+    if(isset($_SESSION['cart'][$bougth_meal_name])){
+
+        $_SESSION['cart'][$bougth_meal_name]['qty'] += 1;
+
+    } else {
+
+        $_SESSION['cart'][$bougth_meal_name] = [
+            'brand' => $brand_name,
+            'qty' => 1,
+            'price' => $meal_price
+        ];
+    }
+
+    $cart_html = '';
+    $total = 0;
+
+    if(isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): 
+
+        foreach($_SESSION['cart'] as $name => $item):
+
+            $total += $item['price'] * $item['qty'];
+            $cart_html .= '<li>' . $name . ' x' . $item['qty'] . ' - $' . ($item['price'] * $item['qty']) . '</li>';
+
+        endforeach; 
+
+    endif;
+
+    echo json_encode([
+        'success' => true,
+        'cart_html' => $cart_html,
+        'total' => $total,
+        'has_items' => count($_SESSION['cart']) > 0
+    ]);
+
+    exit();
 }
 
 if(isset($_POST['buy'])){
@@ -162,9 +208,7 @@ if(isset($_POST['logout'])){
                                 <span>$'.$meal['meal_price'].'</span>
                             </div>
                             <div class="meal-rating">'.$ratingStars.'</div>
-                            <form method="post" action="menu.php?bougth_meal_name='.$meal['meal_name'].'&brand_name='.$_GET['brand_name'].'&meal_price='.$meal['meal_price'].'">
-                                <button name="buy" class="btn">Add to Cart</button>
-                            </form>
+                            <button onclick="addToCart(\''.$meal['meal_name'].'\', \''.$_GET['brand_name'].'\', '.$meal['meal_price'].')" class="btn add-to-cart-btn">Add to Cart</button>
                         </div>
                     </div>';
                 }
@@ -179,33 +223,35 @@ if(isset($_POST['logout'])){
 
         <h4>Cart</h4>
 
-        <ul>
+        <ul id="cartItems">
+
             <?php 
+
             if(isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): 
+
                 $total = 0;
+                
                 foreach($_SESSION['cart'] as $name => $item):
                     $total += $item['price'] * $item['qty'];
             ?>
                 <li><?php echo $name . ' x' . $item['qty'] . ' - $' . ($item['price'] * $item['qty']); ?></li>
+            
             <?php 
                 endforeach; 
             endif; 
             ?>
+
         </ul>
 
-        <strong>Total: $<?php echo isset($total) ? $total : '0'; ?></strong>
+        <strong id="cartTotal">Total: $<?php echo isset($total) ? $total : '0'; ?></strong>
 
-        <?php if(isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-
+        <div id="checkoutSection" style="<?php echo (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) ? 'display:block;' : 'display:none;'; ?>">
             <form method="post" action="checkout.php" style="margin-top:10px;">
                 <button type="submit" class="btn">Checkout</button>
             </form>
-
-        <?php endif; ?>
+        </div>
 
     </div>
-
-
 
     <script>
 
@@ -243,6 +289,52 @@ if(isset($_POST['logout'])){
         searchInput.addEventListener('input', filterMeals);
         filterSelect.addEventListener('change', filterMeals);
         sortSelect.addEventListener('change', filterMeals);
+
+        function addToCart(mealName, brandName, mealPrice) {
+
+            const button = event.target;
+            const originalText = button.textContent;
+            
+            button.disabled = true;
+            button.textContent = 'Adding...';
+            
+            fetch('menu.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `ajax_add_to_cart=1&meal_name=${encodeURIComponent(mealName)}&brand_name=${encodeURIComponent(brandName)}&meal_price=${mealPrice}`
+            })
+
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+
+                    document.getElementById('cartItems').innerHTML = data.cart_html;
+                    document.getElementById('cartTotal').textContent = `Total: $${data.total}`;
+                    
+                    const checkoutSection = document.getElementById('checkoutSection');
+                    checkoutSection.style.display = data.has_items ? 'block' : 'none';
+                    
+                    button.textContent = 'Added!';
+                    button.style.backgroundColor = '#28a745';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.backgroundColor = '';
+                        button.disabled = false;
+                    }, 1000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                button.textContent = 'Error';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 1000);
+            });
+        }
 
     </script>
 

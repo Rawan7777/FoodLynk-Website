@@ -5,6 +5,17 @@ body {
     color: #333;
 }
 
+@keyframes slideUpFromBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .top-bar {
     display: flex;
     align-items: center;
@@ -12,6 +23,9 @@ body {
     padding: 0.4rem 1rem;
     top: 0;
     z-index: 100;
+    animation: slideUpSection 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .top-bar h1 {
@@ -72,6 +86,9 @@ body {
 .dashboard-container {
     margin: 1.5rem 1.5rem;
     padding: 0 2rem;
+    animation: slideUpSection 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .dashboard-header {
@@ -105,7 +122,21 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    animation: slideUpCard 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
 }
+
+.meal-card:nth-child(1) { animation-delay: 0.4s; }
+.meal-card:nth-child(2) { animation-delay: 0.5s; }
+.meal-card:nth-child(3) { animation-delay: 0.6s; }
+.meal-card:nth-child(4) { animation-delay: 0.7s; }
+.meal-card:nth-child(5) { animation-delay: 0.8s; }
+.meal-card:nth-child(6) { animation-delay: 0.9s; }
+.meal-card:nth-child(7) { animation-delay: 1.0s; }
+.meal-card:nth-child(8) { animation-delay: 1.1s; }
+.meal-card:nth-child(9) { animation-delay: 1.2s; }
+.meal-card:nth-child(10) { animation-delay: 1.3s; }
 
 .meal-card:hover {
     transform: translateY(-8px);
@@ -155,21 +186,11 @@ body {
     z-index: 10;
 }
 
-.card-top-buttons {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 3rem;
-}
-
 .card-top-buttons button {
   padding: 0.4rem 0.8rem;
   font-size: 0.8rem;
   border-radius: 8px;
   border: 1px solid transparent;
-  background: hsl(0, 0%, 100%, 0.8);
-  color: #374151;
   cursor: pointer;
   transition: all 0.25s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -180,25 +201,25 @@ body {
 }
 
 .btn-delete {
-  border-color: hsl(4, 90%, 58%, 0.8);
-  color: hsl(4, 90%, 58%, 0.8);
-  background: hsl(0, 100%, 98%, 0.8);
+  border-color: hsl(4, 90%, 58%);
+  color: hsla(0, 0%, 100%);
+  background: hsl(4, 90%, 58%);
 }
 
 .btn-delete:hover {
-  background: hsl(4, 90%, 58%, 0.8);
-  color: hsl(0, 0%, 100%, 0.8);
+  background: hsl(4, 65%, 47%);
+  color: hsl(0, 0%, 100%);
 }
 
 .btn-disable {
-  border-color: hsl(218, 11%, 65%, 0.8);
-  color: hsl(220, 9%, 46%, 0.8);
-  background: hsl(210, 20%, 98%, 0.8);
+  border-color: hsl(218, 11%, 65%);
+  color: hsla(0, 0%, 100%);
+  background: hsl(218, 11%, 65%);
 }
 
 .btn-disable:hover {
-  background: hsl(218, 11%, 65%, 0.8);
-  color: hsl(0, 0%, 100%, 0.8);
+  background: hsl(220, 6%, 47%);
+  color: hsl(0, 0%, 100%);
 }
 
 .popup-overlay {
@@ -215,14 +236,13 @@ body {
 .popup-container {
     background: #fff;
     border-radius: 20px;
-    width: 100%;
-    max-width: 900px;
+    width: 48%;
     padding: 2rem;
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
     animation: fadeIn 0.3s ease;
 }
   
-  @keyframes fadeIn {
+@keyframes fadeIn {
     from { opacity:0; transform: translateY(20px) scale(0.95); }
     to   { opacity:1; transform: translateY(0) scale(1); }
 }
@@ -279,6 +299,7 @@ body {
     border: 2px dashed #ccc;
     border-radius: 16px;
     padding: 2rem;
+    margin-bottom: 10px;
     text-align: center;
     transition: border-color 0.3s;
 }
@@ -323,7 +344,6 @@ body {
     transform: scale(1.2);
 }
   
-  
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -349,7 +369,48 @@ body {
     background: #ddd;
 }
 
-@keyframes fadeInUp {
-    from {opacity:0; transform:translateY(30px);}
-    to {opacity:1; transform:translateY(0);}
+.btn-danger {
+    background: hsl(4, 90%, 58%);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: hsl(4, 65%, 47%);
+}
+
+.confirm-popup {
+    max-width: 500px;
+}
+
+.confirm-content {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.confirm-content p {
+    margin: 0.5rem 0;
+    font-size: 1.05rem;
+    color: #374151;
+}
+
+@keyframes slideUpSection {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpCard {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
